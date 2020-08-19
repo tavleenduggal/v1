@@ -39,6 +39,8 @@ var coordinates;
 // create time variable
 var time;
 
+
+
 var rabbitGroup;
 
 
@@ -124,6 +126,16 @@ function draw(){
   background("white");
 
 
+  for(var i=0;i<count;i++)
+  {
+    var s=rabbitGroup.get(i);
+    if(s.isTouching(ground2))
+    {
+      s.velocityX=-s.velocityX;
+    }
+  }
+
+
 
   /*coordinates.x = World.mouseX;
   coordinates.y = World.mouseY;
@@ -175,7 +187,10 @@ console.log(rabbitGroup.velocityX);
     player.addImage(player1L);
   }
 
+  rabbitGroup.collide(ground1);
+  rabbitGroup.collide(ground3);
   
+
 
 // draw sprites
   drawSprites()
@@ -187,45 +202,26 @@ console.log(rabbitGroup.velocityX);
 function spawnRabbit(){
   if (World.frameCount % 100 === 0){
     count = count+1;
+    var r=Math.round(random(1,2));
+    if(r==1)
+    {
     var rabbit = createSprite(displayWidth, 570);
-    rabbit.addImage(obstacle1L);
-    rabbit.scale = 0.2
     rabbit.velocityX = -2;
-    console.log(rabbit.x);
+    rabbit.addImage(obstacle1L);
     
+    }
+    else
+    if(r==2)
+    {
+      var rabbit = createSprite(0, 570);
+      rabbit.velocityX = 2;
+      rabbit.addImage(obstacle1L);
     
-    rabbit.collide(ground1);
-    rabbit.collide(ground3);
-    if (rabbit.collide(ground2)){
-
-    if( rabbit.x > 850){
-      rabbit.velocityX = 2
-      rabbit.addImage(obstacle1R);
-      rabbit.scale = 0.2;
-    }
-    else if (rabbit.x > displayWidth){
-      rabbit.x = 0;
-      rabbit.velocityX = 2
-      rabbit.addImage(obstacle1R);
-      rabbit.scale = 0.2;
     }
 
-    if (rabbit.x < 280){
-      rabbit.addImage(obstacle1L);
-      rabbit.scale = 0.2;
-      rabbit.velocityX = -2;
-    }
-
-    else if (rabbit.x < 0){
-      rabbit.x =  displayWidth - 30
-      rabbit.addImage(obstacle1L);
-      rabbit.scale = 0.2;
-      rabbit.velocityX = -2;
-    }
-    }
-
-  
-    rabbitGroup.add(rabbit);
+    rabbit.scale = 0.2
+   
+      rabbitGroup.add(rabbit);
   }
   
 }
